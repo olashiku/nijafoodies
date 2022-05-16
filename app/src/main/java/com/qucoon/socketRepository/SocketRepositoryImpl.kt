@@ -21,7 +21,11 @@ class SocketRepositoryImpl @Inject constructor() :SocketRepository,
       return  observeSocketMessage()
     }
 
-   override suspend fun closeSession(){
+    override suspend fun observeRequestString(): String {
+       return observeRequestString()
+    }
+
+    override suspend fun closeSession(){
        closeSocketSession()
    }
 

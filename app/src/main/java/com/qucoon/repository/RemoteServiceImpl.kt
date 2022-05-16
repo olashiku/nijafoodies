@@ -6,12 +6,6 @@ import com.qucoon.model.response.PostResponse
 import com.qucoon.network.HttpRoutes
 import com.qucoon.network.NetworkProvider
 import com.qucoon.network.NetworkResult
-import com.qucoon.network.SocketProvider
-import io.ktor.client.call.*
-import io.ktor.client.features.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
 import javax.inject.Inject
 
 

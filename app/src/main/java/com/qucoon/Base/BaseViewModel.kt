@@ -13,7 +13,8 @@ open class BaseViewModel: ViewModel() {
     val errorMessage = SingleLiveEvent<String>()
     val showLoading = MutableLiveData<Boolean>()
 
-    fun <R:Any,T:Any> makePostRequest(request:R,response:SingleLiveEvent<T>, apiCall:suspend(request:R)-> NetworkResult<T>){
+    fun <R:Any,T:Any> makePostRequest(request:R,response:SingleLiveEvent<T>, apiCall:suspend(request:R)-> NetworkResult<T>
+    ,getError:(response:T) -> String){
 
         runBlocking {
             val result = withContext(Dispatchers.IO) {
@@ -24,13 +25,14 @@ open class BaseViewModel: ViewModel() {
             when(result){
                 is NetworkResult.Success<*> ->{ response.postValue(result.data as T ) }
                 is NetworkResult.Errror->{errorMessage.postValue(result.exception.localizedMessage)}
-                is NetworkResult.Failed<*> ->{errorMessage.postValue(result.toString())}
+                is NetworkResult.Failed<*> ->{errorMessage.postValue(response.value?.let { getError(it) })}
             }
         }
     }
 
 
-    fun <T:Any> makeGetRequest(response:SingleLiveEvent<T>, apiCall:suspend ()-> NetworkResult<T>){
+    fun <T:Any> makeGetRequest(response:SingleLiveEvent<T>, apiCall:suspend ()-> NetworkResult<T>,
+    getError:(response:T)->String){
 
         runBlocking {
             val result = withContext(Dispatchers.IO) {
@@ -41,7 +43,7 @@ open class BaseViewModel: ViewModel() {
             when(result){
                 is NetworkResult.Success<*> ->{ response.postValue(result.data as T ) }
                 is NetworkResult.Errror->{errorMessage.postValue(result.exception.localizedMessage)}
-                is NetworkResult.Failed<*> ->{errorMessage.postValue(result.toString())}
+                is NetworkResult.Failed<*> ->{errorMessage.postValue(response.value?.let { getError(it)})}
                 else -> {}
             }
         }

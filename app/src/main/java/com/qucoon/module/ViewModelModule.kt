@@ -3,7 +3,9 @@ package com.qucoon.module
 import com.qucoon.network.NetworkProvider
 import com.qucoon.repository.RemoteService
 import com.qucoon.repository.RemoteServiceImpl
+import com.qucoon.socketRepository.SocketRepository
 import com.qucoon.viewmodel.PostViewModel
+import com.qucoon.viewmodel.SocketViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -22,6 +24,11 @@ object ViewModelModule {
     @Singleton
     @Provides
     fun providesViewModel(remoteService: RemoteService):PostViewModel= PostViewModel(remoteService = remoteService)
+
+
+     @Singleton
+     @Provides
+     fun providesSocketViewModel(socketRepository: SocketRepository):SocketViewModel = SocketViewModel(socketRepository = socketRepository)
 }
 
 

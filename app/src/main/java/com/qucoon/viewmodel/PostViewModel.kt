@@ -16,10 +16,10 @@ class PostViewModel  @Inject constructor (private val remoteService: RemoteServi
 
     fun makePost(){
         val request = PostRequest("helloworld","yoo",0)
-        makePostRequest(request,postData,remoteService::createPost)
+        makePostRequest(request,postData,remoteService::createPost,{it.responseMessage})
     }
 
      fun getPost(){
-         makeGetRequest(getPostData,remoteService::getPosts)
+         makeGetRequest(getPostData,remoteService::getPosts) { "something happened" }
      }
 }

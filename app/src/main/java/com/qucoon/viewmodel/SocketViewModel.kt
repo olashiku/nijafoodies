@@ -1,15 +1,16 @@
 package com.qucoon.viewmodel
 
-import android.accounts.NetworkErrorException
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.qucoon.Base.BaseSocketRepository
-import com.qucoon.Base.BaseViewModel
+import com.qucoon.Base.BaseSocketViewModel
 import com.qucoon.model.request.authyRequest.AuthyRequest
+import com.qucoon.model.request.authyRequest.Msgsender
 import com.qucoon.network.NetworkResult
 import com.qucoon.socketRepository.SocketRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -17,49 +18,22 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class SocketViewModel @Inject constructor(val socketRepository: SocketRepository):BaseViewModel(){
+class SocketViewModel @Inject constructor(val socketRepository: SocketRepository): BaseSocketViewModel(){
+    var isOpenLiveData = MutableLiveData<String>()
 
-    fun openConnection():Boolean{
-        var isActive = false
-        viewModelScope.launch {
-
-      val result =   socketRepository.openSocket()
-            isActive = when(result){
-                is NetworkResult.SuccessSocketConnection -> {
-                    true
-                }
-                is NetworkResult.Failed<*> ->{
-                    false
-                }
-                is NetworkResult.Errror -> {
-                    false
-                }
-                else ->{
-                    false
-                }
-            }
-        }
-        return isActive
-
+    fun openConnection(){
+        openSocketConnection(socketRepository::openSocket,isOpenLiveData)
     }
 
-     fun sendmessageToSocket(request: AuthyRequest){
-         val jsonString = Json.encodeToString(request)
-         viewModelScope.launch {
-             socketRepository.sendMessage(jsonString)
-         }
+
+     fun sendmessageToSocket(){
+         val msgsender = Msgsender("MAC-1029383","11111111111","psk-87yaygufhbivs9f8hufne9suajer8jae8sgife9j8swrijef9sv8brhwje9fgswnu")
+         val request = AuthyRequest("authy","123223","{lat:38.8951, log:-77.0364}",
+             "Web",msgsender,"2020-06-30 T 10:45")
+       sendMessage(request,socketRepository::sendMessage)
      }
 
-     fun observeRequest(): Flow<String>? {
-         var result : Flow<String>? = null
-         viewModelScope.launch {
-            result =  socketRepository.observeRequest()
-             result?.asLiveData()
-         }
-         return  result
-
+     fun observeResponse(): LiveData<String>? {
+         return observeSessionResponse(socketRepository::observeRequest)
      }
-
-
-
 }

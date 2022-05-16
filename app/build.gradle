@@ -87,12 +87,16 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.21"
 
     def nav_version = "2.4.2"
-    def lifecycle_version = "2.4.0"
+    def lifecycle_version = "2.4.1"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.4.2"
+    implementation "androidx.navigation:navigation-ui-ktx:2.4.2"
+    implementation 'com.github.gurleensethi:LiteUtilities:v1.3.0'
 
-
+    // recycler view 
+    implementation "com.android.support:recyclerview-v7:25.0.0"
 
 }
 

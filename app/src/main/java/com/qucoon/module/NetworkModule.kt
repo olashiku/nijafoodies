@@ -1,6 +1,7 @@
 package com.qucoon.module
 
 import com.qucoon.Base.BaseRepository
+import com.qucoon.Base.BaseSocketRepository
 import com.qucoon.network.NetworkProvider
 import dagger.Module
 import dagger.Provides
@@ -20,5 +21,10 @@ object NetworkModule{
     @Provides
     @Singleton
     fun providesBaseRepoWithNetwork(networkProvider: NetworkProvider): BaseRepository = BaseRepository(networkProvider = NetworkProvider())
+
+
+    @Provides
+    @Singleton
+    fun provideBaseSocketWithNetwork():BaseSocketRepository = BaseSocketRepository(networkProvider = NetworkProvider())
 }
 

@@ -1,18 +1,14 @@
 package com.qucoon.Base
 
-import com.qucoon.network.Message
 import com.qucoon.network.NetworkProvider
 import com.qucoon.network.NetworkResult
 import com.qucoon.utils.Constants
-import io.ktor.client.*
 import io.ktor.client.features.websocket.*
 import io.ktor.client.request.*
 import io.ktor.http.cio.websocket.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.isActive
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
-import java.lang.Exception
+import javax.inject.Inject
 
 interface ChatSocketService{
     suspend fun <T:Any> openSocketSession(): NetworkResult<T>
@@ -20,18 +16,21 @@ interface ChatSocketService{
     suspend fun closeSocketSession()
 }
 
-open class BaseSocketRepository(val networkProvider: NetworkProvider):ChatSocketService {
+open class BaseSocketRepository @Inject constructor(val networkProvider: NetworkProvider):ChatSocketService {
      var  socket : WebSocketSession?  = null
 
     override suspend  fun <T:Any> openSocketSession(): NetworkResult<T> {
         return try {
-            if(socket!!.isActive){
+            if(socket?.isActive != true){
                 socket = networkProvider.socketClient.webSocketSession {
-                    url(Constants.testwebSocketUrl)
+                    url(Constants.webSocketUrl)
                 }
-                NetworkResult.SuccessSocketConnection()
+                NetworkResult.SuccessSocketConnection("success")
             }else {
-                NetworkResult.Failed("Session has closed")
+                socket = networkProvider.socketClient.webSocketSession {
+                    url(Constants.webSocketUrl)
+                }
+                NetworkResult.Failed("network error, something happened")
             }
         }catch (ex: Exception){
             NetworkResult.Errror(ex)
@@ -46,12 +45,29 @@ open class BaseSocketRepository(val networkProvider: NetworkProvider):ChatSocket
         }
     }
 
-     suspend inline fun < reified T:Any> observeSocketMessage(): Flow<T> {
+
+     suspend fun observeMessageString(): String {
+        var   response = ""
+        try {
+            for (message in socket!!.incoming) {
+                message as? Frame.Text ?: continue
+                response =  message.readText()
+                println("serverMessage $response")
+            }
+        } catch (e: Exception) {
+            response  = ("Error while receiving: " + e.localizedMessage)
+        }
+
+        return response
+    }
+
+
+       fun  observeSocketMessage(): Flow<String> {
         return  try {
             socket!!.incoming.receiveAsFlow().filter { it is Frame.Text }.map {
-                val json = (it as Frame.Text).readText()?: ""
-                val message = Json.decodeFromString<T>(json)
-                message
+                val string = (it as Frame.Text).readText()?: ""
+            //    val message = Json.decodeFromString<T>(string)
+                string
             }?: flow {  }
         }catch (ex:Exception){
             ex.printStackTrace()

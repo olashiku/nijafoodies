@@ -18,38 +18,33 @@ import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 class NetworkProvider @Inject constructor() {
-    val client =  HttpClient(Android){
-            install(Logging){
-                level = LogLevel.ALL
-            }
-            install(JsonFeature){
-                serializer = KotlinxSerializer(json)
-            }
-
-
-       defaultRequest {
-          header("Content-Type", "application/json")
-
-      }
-
-       install(HttpTimeout) {
-                requestTimeoutMillis = 15000L
-                connectTimeoutMillis = 15000L
-                socketTimeoutMillis = 15000L
-            }
+    val client = HttpClient(Android) {
+        install(Logging) {
+            level = LogLevel.ALL
+        }
+        install(JsonFeature) {
+            serializer = KotlinxSerializer(json)
+        }
+        defaultRequest {
+            header("Content-Type", "application/json")
         }
 
+        install(HttpTimeout) {
+            requestTimeoutMillis = 15000L
+            connectTimeoutMillis = 15000L
+            socketTimeoutMillis = 15000L
+        }
+    }
 
     val socketClient = HttpClient(CIO) {
         install(WebSockets)
-        install(Logging){
-            level = LogLevel.BODY
+        install(Logging) {
+            level = LogLevel.ALL
         }
     }
+}
 
-    }
-
-public val json = Json {
+ val json = Json {
     ignoreUnknownKeys = true
     isLenient = true
     encodeDefaults = false
