@@ -3,7 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.35462962962962963" />
+        <entry key="app/src/main/res/drawable/oval_drawable.xml" value="0.3824074074074074" />
+        <entry key="app/src/main/res/drawable/tab_indicator_default.xml" value="0.31916666666666665" />
+        <entry key="app/src/main/res/drawable/tab_indicator_selected.xml" value="0.31916666666666665" />
+        <entry key="app/src/main/res/drawable/view_pager_drawable.xml" value="0.31916666666666665" />
+        <entry key="app/src/main/res/font/mplus_font_weight.xml" value="0.23385416666666667" />
+        <entry key="app/src/main/res/font/plus_font_weight_700.xml" value="0.23385416666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.192481884057971" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_onboarding.xml" value="0.2665199785662453" />
+        <entry key="app/src/main/res/layout/fragment_onboarding_pager.xml" value="0.3022875816993464" />
+        <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.12796876951092323" />
+        <entry key="app/src/main/res/layout/fragment_splash_screen.xml" value="0.22509057971014493" />
       </map>
     </option>
   </component>

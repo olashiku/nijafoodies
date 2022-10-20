@@ -13,4 +13,28 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="SkipTextStyle">
+        <item name="android:textSize">17.49sp</item>
+        <item name="android:textColor">@color/primary_color</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="SlideTitle1">
+        <item name="android:textSize">27.49sp</item>
+        <item name="android:textColor">#009191</item>
+        <item name="fontFamily">@font/mplus_font_weight</item>
+    </style>
+
+    <style name="SlideTitle2">
+        <item name="android:textSize">27.49sp</item>
+        <item name="android:textColor">#A88300</item>
+        <item name="android:fontFamily">@font/mplus_one_medium</item>
+    </style>
+
+    <style name="SlideBody">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">#123535</item>
+        <item name="android:fontFamily">@font/mplus_one_medium</item>
+    </style>
 </resources>

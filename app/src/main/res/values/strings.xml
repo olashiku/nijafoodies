@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">MobileApplicationTemplate</string>
+    <string name="app_name">NijaFoodies</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="skip_text">Skip</string>
+    <string name="todo">TODO</string>
+    <string name="page1Title1">Eat healthy, save</string>
+    <string name="page1Title2">Money</string>
+    <string name="page1Body">Lörem ipsum pos pongen då jons.Oren fadeligt hexadyd inklusive .Dov dock petabyte, haffa. </string>
+    <string name="page2Title1">Eat healthy, save</string>
+    <string name="page2Title2">Money</string>
+    <string name="page2Body">Lörem ipsum pos pongen då jons.Oren fadeligt hexadyd inklusive .Dov dock petabyte, haffa. </string>
+    <string name="page3Title1">Eat healthy, save</string>
+    <string name="page3Title2">Money</string>
+    <string name="page3Body">Lörem ipsum pos pongen då jons.Oren fadeligt hexadyd inklusive .Dov dock petabyte, haffa. </string>
+
+
 </resources>
